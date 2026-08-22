@@ -396,12 +396,34 @@ def calcular_polinomio():
 calcular_polinomio()
 
 
-
 """
 18: Modificar la función row_echelon de manera que evalue en cada pivot si no hay otro elemento de la misma columna con módulo mayor (en valor absoluto). En caso afirmativo, hacer el swap de las filas.
 Esta operatoria permite tener mayor estabilidad numérica.
 1. Agarro pivot de cada fila.
 2. Me fijo si en esa columna no hay otro elemento con módulo mayor. Si hay, detectar esa fila y hacer el swap. Puedo usar: def intercambiarFilas(A, i, j)
+
+¿Por qué nos permite tener mayor estabilidad numérica?
+Imaginate que tenes
+\begin{cmatrix}
+  0.000001 & 1 \\
+  1000 & 2 \\
+\end{cmatrix}
+
+Acá tomamos el 0.000001 como pivote
+¿Cuál es el problema? Si haces F2 <- F2 - \frac{1000}{0.000001}*F1, el factor es 10**9. Multiplicás una fila por mil millones.
+
+En cambio, si hacés
+\begin{cmatrix}
+  1000 & 1 \\
+  0.000001 & 2 \\
+\end{cmatrix}
+
+Acá tomamos el 1000 como pivote, y para eliminar el 0.000001 el factor es 10**-9. Multiplicás por algo mucho más pequeño.
+
+¿Y por qué esto importa? Porque el pivote queda en el denominador! Si el número es muy muy muy pequeño, el cociente se hace enorme. Hay que evitar a toda costa hacer divisiones por números pequeños.
+
+Enseñanza: Si elegís un pivote y en su misma columna hay otro elemento con mayor valor absoluto, intercambiá las filas. Después del swap, el nuevo elemento pasa a ser el pivote y hacés la eliminación normalmente.
+
 """
 def row_echelon(A):
     A = [row[:] for row in A]
