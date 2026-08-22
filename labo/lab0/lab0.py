@@ -153,14 +153,18 @@ matrix_dominante = np.array([[100, 0, 0], [0, 150, 0], [0, 0, 200]])
 
 # Si la suma de la diagonal es mayor que la suma de cada fila (con valores absolutos).
 def esDiagonalmenteDominante(A):
-    sum_traza = traza(A)
     sum_filas = np.zeros(A.shape[0])
 
     for i in range(A.shape[0]):
+      sum_fila = 0
       for j in range(A.shape[1]):
-        sum_filas[i] += A[i][j]
+        if j!=i:
+          sum_fila += (abs(A[i][j]))
+      if abs(A[i][i]) <= sum_fila:
+        return False
+      
 
-    return np.all(sum_traza > sum_filas)
+    return True
 
 assert(esDiagonalmenteDominante(matrix) == False)
 assert(esDiagonalmenteDominante(matrix_dominante) == True)
