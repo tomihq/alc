@@ -30,3 +30,4 @@ plt.plot(x, f(x))
 
 ## Show the chart
 plt.show()
+
