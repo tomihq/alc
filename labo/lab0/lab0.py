@@ -359,7 +359,19 @@ Podría armar una matriz con los valores tipo: [(a ** 5, - a ** 4, a ** 3, - a *
 
 No hace falta, puedo usar linspace, pasar la función lambda y plotearlo.
 
-Preguntar: ¿más eficiente con respecto a qué? ¿Como es como crecen los valores? no entiendo la pregunta.
+Preguntar: 
+1. ¿Más eficiente con respecto a qué? en la diapo del labo dice que nos interesa el "tiempo de cómputo" y "la memoria" utilizada. 
+2. ¿Como es como crecen los valores, esto es analizar complejidad también? no entiendo la pregunta.
+
+1. Tenemos que evaluarlo en 100 puntos (-1 a 1). Para un solo x, tenemos m operaciones, mientras que para todos los x tendríamos O(nm) operaciones.
+Notar que m serían: m potencias x**k, m multiplicaciones por los coeficientes y m sumas.
+Esto crece muy feo si crece n, ya que m estaría fijo en este polinomio. Lo que podría variar es cuantos puntos pedimos evaluar.
+
+En el primer polinomio, m está fijo con m = 5.
+En el segundo polinomio, m está fijo con m = 2.
+En el tercer polinomio, m está fijo con m = 10.
+Si tuviesemos alguna variable tipo x ** k, con k algún número natural, tendríamos que considerar que podría ser muy grande.
+
 """
 
 import matplotlib.pyplot as plt
@@ -383,4 +395,45 @@ def calcular_polinomio():
 
 calcular_polinomio()
 
-## 18
+
+
+"""
+18: Modificar la función row_echelon de manera que evalue en cada pivot si no hay otro elemento de la misma columna con módulo mayor (en valor absoluto). En caso afirmativo, hacer el swap de las filas.
+Esta operatoria permite tener mayor estabilidad numérica.
+1. Agarro pivot de cada fila.
+2. Me fijo si en esa columna no hay otro elemento con módulo mayor. Si hay, detectar esa fila y hacer el swap. Puedo usar: def intercambiarFilas(A, i, j)
+"""
+def row_echelon(A):
+    A = [row[:] for row in A]
+    rows = len(A)
+    cols = len(A[0])
+
+    pivot_row = 0
+
+    for col in range(cols):
+        pivot = None
+        for row in range(pivot_row, rows):
+          if A[row][col] != 0:
+              if pivot is None:
+                  pivot = row
+              elif abs(A[row][col]) > abs(A[pivot][col]):
+                  pivot = row
+
+        if pivot is None:
+            continue
+
+
+        intercambiarFilas(A, pivot_row, pivot)
+
+        for row in range(pivot_row + 1, rows):
+            factor = A[row][col] / A[pivot_row][col]
+
+            for j in range(col, cols):
+                A[row][j] -= factor * A[pivot_row][j]
+
+        pivot_row += 1
+
+        if pivot_row == rows:
+            break
+
+    return A
