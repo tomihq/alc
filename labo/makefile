@@ -3,7 +3,7 @@ VENV_BIN := $(VENV)/bin
 VENV_PIP := $(VENV_BIN)/pip
 VENV_PYTHON := $(VENV_BIN)/python
 
-.PHONY: all venv run clean
+.PHONY: all venv activate run clean
 
 all: run
 
@@ -16,6 +16,10 @@ $(VENV)/.infrastructure_built: requirements.txt
 	touch $(VENV)/.infrastructure_built
 
 venv: $(VENV)/.infrastructure_built
+
+activate: venv
+	@echo "To activate the virtual environment, run:"
+	@echo "source $(VENV_BIN)/activate"
 
 clean:
 	rm -rf $(VENV)
