@@ -166,7 +166,7 @@ def afin(theta, s, b):
 
     return matriz
 
-    assert(np.allclose(
+assert(np.allclose(
     afin(0,[1,1],[1,2]),
     np.array([[1,0,1],
               [0,1,2],
