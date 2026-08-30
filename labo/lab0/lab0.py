@@ -104,7 +104,17 @@ print(traspuesta(matrix))
 
 #Matriz Simétrica: A = At (t: traspuesta)
 def esSimetrica(A):
-  return np.array_equal(A, traspuesta(A))
+    if (not(esCuadrada(A))):
+        return False 
+    
+    matrizTranspuesta = traspuesta(A)
+
+    for i in range (0,A.shape[0],1):
+          for j in range (0,A.shape[1],1):
+              if (A[i][j] != matrizTranspuesta[i][j]): 
+                    return False
+    return True
+
 
 assert(esSimetrica(matrix) == False)
 assert(esSimetrica(trasposed_matrix) == True)
