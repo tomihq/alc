@@ -69,6 +69,7 @@ def diagonal(A):
 
     print(A)
     print(matrix_b)
+  return matrix_b
 
 print(diagonal(matrix))
 
