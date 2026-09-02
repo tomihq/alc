@@ -1,13 +1,22 @@
 import numpy as np 
 
 def error(x, y):
-    x = np.float32(x)  
+    x = np.float64(x)  
     return abs(x - y)
 
 def error_relativo(x, y):
   x = np.float32(x)
 
   return abs(x-y) / abs(x)
+
+def matricesIguales(A, B):
+
+    for i in range(A.shape[0]):
+        for j in range(A.shape[1]):
+            if error(A[i, j], B[i, j]) > np.float64(0.7e-1):
+                return False
+
+    return True
 
 def multiplicar_matrices(A, B):
     matrix = np.zeros((A.shape[0], A.shape[1]))
@@ -50,3 +59,16 @@ def afin(theta, s, b):
     ])
 
     return matriz
+
+def trans_afin(v, theta, s, b):
+    matriz = afin(theta, s, b)
+
+    v_extendido = np.array([
+        [v[0]],
+        [v[1]],
+        [1]
+    ])
+
+    resultado = multiplicar_matrices(matriz, v_extendido)
+
+    return resultado[:2, 0]
