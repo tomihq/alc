@@ -20,13 +20,11 @@ def multiplicar_matrices(A, B):
     return matrix
 
 
-def rota(theta): 
-  matrix = np.zeros((2,2))
-  matrix[0, 0] = np.cos(theta)
-  matrix[0, 1] = -np.sin(theta)
-  matrix[1, 0] = np.sin(theta)
-  matrix[1, 1] = np.cos(theta)
-  return matrix
+def rota(theta):
+    return np.array([
+        [np.cos(theta), -np.sin(theta)],
+        [np.sin(theta),  np.cos(theta)]
+    ])
 
 def escala(s):
   matrix = np.zeros((len(s), len(s)))
