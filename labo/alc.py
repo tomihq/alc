@@ -10,10 +10,12 @@ def error_relativo(x, y):
   return abs(x-y) / abs(x)
 
 def matricesIguales(A, B):
+    if A.shape != B.shape:
+        return False
 
     for i in range(A.shape[0]):
         for j in range(A.shape[1]):
-            if error(A[i, j], B[i, j]) > np.float64(0.7e-1):
+            if not np.isclose(A[i, j], B[i, j]):
                 return False
 
     return True
