@@ -93,14 +93,12 @@ print(traza(matrix))
 
 #Traspuesta: cambiar filas x columnas y viceversa.
 def traspuesta(A):
-  matrix_b = crearMatrizConDimensionesDe(A)
+  matrix_b = np.zeros((A.shape[1], A.shape[0]))
 
   for i in range(A.shape[0]):
     for j in range(A.shape[1]):
       matrix_b[j][i] = A[i][j]
 
-  print(A)
-  print(matrix_b)
   return matrix_b
 
 print(traspuesta(matrix))
