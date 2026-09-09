@@ -211,7 +211,7 @@ def matrizVandermonde(v):
   for i in range(len(v)):
     for j in range(len(v)):
         matriz_vandermonde[i][j] = v[j]**i
-
+  return matriz_vandermonde
 """
 Solución 1: más eficiente, puedo ir pisando los valores. No necesito guardar tantas cosas.
 Me dan n. Tengo que calcular Fk+1/Fk.
