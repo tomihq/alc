@@ -37,6 +37,8 @@ def triangSup(A):
       if j > i:
         matrix_b[i][j] = A[i][j]
 
+  return matrix_b;
+
   print(A)
   print(matrix_b)
 
@@ -49,8 +51,9 @@ def triangInf(A):
 
   for i in range(A.shape[0]):
     for j in range(A.shape[1]):
-      if j <= i:
+      if j < i:
         matrix_b[i][j] = A[i][j]
+  return matrix_b 
 
   print(A)
   print(matrix_b)
