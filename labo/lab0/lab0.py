@@ -148,7 +148,7 @@ def intercambiarFilas(A, i, j):
         old = A[j][l]
         A[j][l] = A[i][l]
         A[i][l] = old
-
+  return A
   print(A)
 
 print(matrix)
@@ -163,6 +163,7 @@ def sumar_fila_multiplo(A, i, j, s):
       if i == k:
         value = A[j][l] * s ##ValFilaColumna*s. Ahora lo sumo con el de i j.
         A[i][l] = A[i][l] + value
+  return A
   print(A)
 
 sumar_fila_multiplo(matrix, 0, 1, 2)
