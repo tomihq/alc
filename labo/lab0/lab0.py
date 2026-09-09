@@ -193,13 +193,13 @@ def crearMatrizCuadradaDesdeVector(A):
   return np.zeros((A.shape[0], A.shape[0]))
 
 # Ej.: v = [1, 2, 3] la matriz es [[1, 2, 3], [2, 3, 1], [3, 1, 2]]
-def matriz_circulante(v):
+def matrizCirculante(v):
   matrix_circulante = crearMatrizCuadradaDesdeVector(v)
 
   for i in range(matrix_circulante.shape[0]):
     for j in range(matrix_circulante.shape[1]):
       matrix_circulante[i][j] = v[(i+j) % matrix_circulante.shape[0]]
-
+  return matrix_circulante
   print(matrix_circulante)
 
 matriz_circulante(np.array([1, 2, 3]))
