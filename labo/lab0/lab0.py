@@ -122,7 +122,7 @@ assert(esSimetrica(trasposed_matrix) == True)
 
 ## A = n x m, x = m x 1. Devolver el vector resultado de longitud n x 1.
 def calcularAx(A, x):
-  matrix_b = np.zeros((A.shape[1]))
+  matrix_b = np.zeros((A.shape[0]))
 
   for i in range(A.shape[0]):
     for j in range(A.shape[1]):
