@@ -198,7 +198,7 @@ def forward_sustitution(L, b):
             acum += L[i][j] * y[j]
         y[i] = (der - acum) / L[i][i]
     
-    return (L, y, b)
+    return y
 
 """res = forward_sustitution(np.array([[2, 0, 0], [3, 1, 0], [4, 2, 5]]), np.array([[4], [7], [20]]))
 print("L:", res[0])
@@ -218,9 +218,14 @@ def backward_sustitution(U, y):
 
         x[j] = (der - acum) / U[j][j]
     
-    return (U, x, y)
+    return x
+"""backward_sustitution(np.array([[2, 1, -1], [0, 3, 2], [0, 0, 4]]), np.array([[5], [7], [8]]))"""
 
-res = backward_sustitution(np.array([[2, 1, -1], [0, 3, 2], [0, 0, 4]]), np.array([[5], [7], [8]]))
-print("U:", res[0])
-print("x:", res[1])
-print("y:", res[2])
+def resolver_sistema(A, b):
+    L, U, _ = calculaLU(A)
+
+    y = forward_sustitution(L, b)
+    x = backward_sustitution(U, y)
+
+    vx = np.array([x[i][0] for i in range(x.shape[0])])
+    return vx
