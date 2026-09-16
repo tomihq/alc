@@ -157,4 +157,70 @@ def relacionLUMatriz(sizes):
 
 
 
-print(relacionLUMatriz([1, 2, 3, 4, 5, 10, 50, 100, 200, 250, 300]))
+#print(relacionLUMatriz([1, 2, 3, 4, 5, 10, 50, 100, 200, 250, 300]))
+
+"""
+    3. Calcular la solución de un sistema
+        a) Ly = b, siendo L triangular inferior (forward sustitution)
+        b) Ux = y, siendo U triangular superior (backward sustitution)
+        c) Resolver un sistema Ax = b, utilizando las funciones de los ítems anteriores.
+
+    Algunas aclaraciones: L y U son cuadradas.
+
+    Si L es nxn, y se multiplica por y entonces y tiene dimensión n x 1 (es un vector). Por lo tanto, b es n x 1.
+
+    Tuve que hacerme una formula para ver como hacer lo de forward sustitution, la dejo acá.
+        A. coefx1A x1 = b[0]
+        B. coefx1B x1 + coefx2B x2 = b[1]
+        C. coefx1C x1 + coefx2C x2 + coefx2C x3 = b[2]
+
+        y[0] = (b[0] / coefx1A)
+        y[1] = (b[1] - coefx1B (y[0])) / coefx2B
+        y[2] = (b[2] - coefx1C(y[0]) + coefx2C (y[1])
+
+        Pienso directo en código ahora, usando las variables.
+        y[2] = (b[2] - (L[2, 0] * y[0]) + (L[2, 1] * y[1])) / L[2][2]
+
+        2 = fila
+        0 = columna
+        1 = moverte en otra columna
+
+"""
+
+def forward_sustitution(L, b):
+    n = L.shape[0]
+    y = np.zeros((n, 1))
+
+    for i in range(n):
+        der = b[i]
+        acum = 0
+        for j in range(n):
+            acum += L[i][j] * y[j]
+        y[i] = (der - acum) / L[i][i]
+    
+    return (L, y, b)
+
+"""res = forward_sustitution(np.array([[2, 0, 0], [3, 1, 0], [4, 2, 5]]), np.array([[4], [7], [20]]))
+print("L:", res[0])
+print("y:", res[1])
+print("b:", res[2])"""
+
+
+def backward_sustitution(U, y):
+    n = U.shape[0]
+    x = np.zeros((n, 1))
+
+    for j in range(n-1, -1, -1): #arranco en ultima columna
+        der = y[j]
+        acum = 0
+        for i in range(j+1, n): #arranco en ultima fila
+            acum += U[j][i] * x[i]
+
+        x[j] = (der - acum) / U[j][j]
+    
+    return (U, x, y)
+
+res = backward_sustitution(np.array([[2, 1, -1], [0, 3, 2], [0, 0, 4]]), np.array([[5], [7], [8]]))
+print("U:", res[0])
+print("x:", res[1])
+print("y:", res[2])
