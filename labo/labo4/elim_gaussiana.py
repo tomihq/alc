@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def calculaLU(A):
     cant_op = 0
@@ -44,3 +45,48 @@ def calculaLU(A):
 
             
     return L, U, cant_op
+
+"""
+    b) Pruebe la descomposición LU para matrices generadas al azar de n x n y grafique el error cometido al aproximar A = LU conforme crece el número de operaciones.
+    Para esto realice un gráfico de ||A-LU|| (error absoluto) para una norma de su preferencia, en función de n. 
+
+    Realicen el gráfico en escala log log y estimar visualmente el pendiente de la misma.
+
+    Voy a generar 10 matrices de n x n, y generar para cada una la matriz LU. 
+    Luego, mostraré el error absoluto de cada una.
+
+    Lo que muestra el gráfico de este ejercicio es algo importante: en matrices más grandes, necesitamos más operaciones. Por lo tanto, el crecimiento del error se va arrastrando cada vez más.    
+
+    No obstante, al observar el gráfico vemos que si bien el error crece, crece en escala particularmente pequeña. Los valores van desde 10e-16 y 10e-12.
+
+    ¿Por qué nos importa la cantidad de operaciones? Por esto
+    Ac[fila, k] = Ac[fila, k] - val * Ac[columna, k]
+
+    Usamos algo que computamos antes, en cada iteración. Si en cada iteración hay error, acumulamos error cada vez más. Notar que si encima los números son feos, entonces peor. 
+
+    
+"""
+
+def estimarError(sizes):
+    errores = []
+    operaciones = []
+    for n in sizes:
+        matrix = np.random.rand(n, n)
+        L, U, cant_ops = calculaLU(matrix)
+        matrix_reconstruida = L @ U 
+        error = norma1(matrix - matrix_reconstruida) ##la hicimos en el labo3
+        errores.append(error)
+        operaciones.append(cant_ops)
+
+    plt.figure(figsize=(8, 6))
+    plt.loglog(operaciones, errores, marker='o', linestyle='-', color='b')
+    
+    plt.xlabel("Número de operaciones (cant_ops)")
+    plt.ylabel("Error de aproximación ||A - LU|| (Norma Exacta)")
+    plt.title("Crecimiento del error en la descomposición LU")
+    plt.grid(True, which="both", ls="--")
+    plt.show()
+    
+    return operaciones, errores
+
+print(estimarError([5, 10, 20, 50, 100, 200]))
