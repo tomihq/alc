@@ -109,6 +109,28 @@ def estimarError(sizes):
 
     (Notar que la norma infinito de U_n de casualidad es 2^{n-1} porque la ultima columna va creciendo a su valor, y como la norma infinito es el valor más grande lo agarra cuando termina).
 
+    ¿Podemos encontrar una función que nos diga en base al tamaño la cantidad de operaciones? hagamos matemática en base a mis datos de prueba.
+
+    C(100) = 661650
+    C(200) = 5313300
+
+    Dupliqué el n, ¿por cuánto se multipla C(n)?
+    C(200) / C(100) = 5313300 / 661650 aprox 8.03
+
+    Ahora
+
+    C(300) = 17954950
+
+    C(300) / C(100) =  17954950 / 661650 aprox 27.14
+
+    n -> 2n => C(n) -> 8C(n)
+    n -> 3n => C(n) -> 27C(n)
+
+    Entonces C(n) es aprox kC(n)
+
+    ¿Pero cuánto vale k? ¡Despejemos para varios valores de n! Aprox para 10 valores me dió 0.6
+
+    Entonces, la función aproximada es: C(n) = 0.665n^3 (véase el = como un aproximado, no como igualdad estricta)
     
 """
 def relacionLUMatriz(sizes):
