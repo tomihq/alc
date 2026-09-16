@@ -1,6 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+"""
+    L = triangular inferior
+    U = triangular superior
+"""
 def calculaLU(A):
     cant_op = 0
 
@@ -229,3 +233,67 @@ def resolver_sistema(A, b):
 
     vx = np.array([x[i][0] for i in range(x.shape[0])])
     return vx
+
+# del labo0
+def esCuadrada(A):
+  return A.shape[0] == A.shape[1]
+
+def esSimetrica(A):
+    if (not(esCuadrada(A))):
+        return False 
+    
+    matrizTranspuesta = traspuesta(A)
+
+    for i in range (0,A.shape[0],1):
+          for j in range (0,A.shape[1],1):
+              if (A[i][j] != matrizTranspuesta[i][j]): 
+                    return False
+    return True
+
+def traspuesta(A):
+  matrix_b = np.zeros((A.shape[1], A.shape[0]))
+
+  for i in range(A.shape[0]):
+    for j in range(A.shape[1]):
+      matrix_b[j][i] = A[i][j]
+
+  return matrix_b
+
+
+"""
+    4. Con restricciones similares a las necesarias para aplicar la factorización LU, es posible realizar una descomposición denominada LDV.
+    En la descomposición LDV:
+        - La matriz L es la misma que en la factorización LDV
+        - Las matrices D y V salen de aplicar al descomposición LU de la matriz U^t
+    
+    Gracias a que la matriz U es triangular superior e inversible, aplicar LU a U^{t} resulta en una matriz diagonal D cuyos elementos son iguales a la diagonal de U y una matriz V triangular superior tal que V^{t}D = U^{t} o DV = U
+
+    Más aún, cuando A es simétrica, resulta que V = L^{t} y entonces A = LDL^{t}.
+
+    Esta representación permite caracterizar a A en terminos de su positividad (SDP)
+
+"""
+def descomposicion_ldv(A):
+    L, U, _ = calculaLU(A) #L es triangular inferior. U es triangular superior
+    traspuesta_u = traspuesta(U) #traspuesta_u es triangular inferior
+    D, V, _ = calculaLU(traspuesta_u) #Notar que D nace de la U original que es triangular superior, y después la traspusimos. Entonces nos queda solo la diagonal.
+
+    return L, D, V
+
+def diagonal(A):
+    arr = np.zeros(A.shape[0])
+
+    for i in range(A.shape[0]):
+        arr[i] = A[i][i]
+
+    return arr
+
+def esSDP(A, atol=1e-10):
+    _, D, _ = descomposicion_ldv(A)
+    
+    if not esSimetrica(A):
+        return False 
+    
+    diagonal_d = diagonal(D)
+        
+    return np.all(diagonal_d > 0)
