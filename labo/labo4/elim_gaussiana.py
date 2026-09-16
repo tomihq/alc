@@ -297,3 +297,9 @@ def esSDP(A, atol=1e-10):
     diagonal_d = diagonal(D)
         
     return np.all(diagonal_d > 0)
+
+"""
+    5. En los casos que A es SDP; se puede factorizar en la forma RR^{t}, donde R es una matriz triangular inferior tal que R = LD^{1/2}.
+        - D^{1/2} es una matriz diagonal con las raices de los elementos de la diagonal de la matriz D.
+        - L y D resultan de la factorización LDV de A.
+"""
