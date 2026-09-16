@@ -303,3 +303,60 @@ def esSDP(A, atol=1e-10):
         - D^{1/2} es una matriz diagonal con las raices de los elementos de la diagonal de la matriz D.
         - L y D resultan de la factorización LDV de A.
 """
+
+"""
+    Resuelve el sistema Lx = b donde L es triangular. Se puede indicar si es triangular inferior o superior usando el argumento inferior
+"""
+def res_tri(L, b, inferior = True):
+    x = []
+    if inferior:
+        x = forward_sustitution(L, b)
+    else:
+        x = backward_sustitution(L, b)
+
+    return np.array([x[i][0] for i in range(x.shape[0])])
+
+
+"""
+Calcula la inversa de A empleando la factorización LU y las funciones que resuelven sistemas triangulares.
+
+    1. Se factoriza A como A = LU.
+    2. Para obtener cada columna de A^-1, se resuelve:
+       
+           A x_i = e_i
+
+       donde e_i es la columna i de la matriz identidad.
+
+    3. Como A = LU, se tiene:
+           LU x_i = e_i
+
+       y se divide el problema en dos sistemas triangulares:
+
+           L y_i = e_i    -> forward substitution
+           U x_i = y_i    -> backward substitution
+
+    4. El vector x_i obtenido es la columna i de A^-1.
+    5. Se repite el procedimiento para cada columna de la identidad
+       y se construye A^-1 colocando cada x_i como columna.
+
+"""
+def inversa(A):
+    L, U, _ = calculaLU(A)
+
+    if L is None or U is None:
+        return None
+
+    n = A.shape[0]
+    A_inv = np.zeros((n, n))
+
+    for i in range(n):
+
+        e = np.zeros((n, 1))
+        e[i][0] = 1
+
+        y = res_tri(L, e)
+        x = res_tri(U, y, inferior=False)
+
+        A_inv[:, i] = x
+
+    return A_inv
