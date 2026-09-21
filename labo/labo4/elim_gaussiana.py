@@ -234,6 +234,8 @@ def resolver_sistema(A, b):
     vx = np.array([x[i][0] for i in range(x.shape[0])])
     return vx
 
+# verificacion ej 2 c de la guía: print(resolver_sistema(np.array([[1, -1, 0, 1], [0, 1, 4, 0], [2, -1, 0, -2], [-3, 3, 0, -1]]), np.array([1, -7, -5, 1])))
+
 # del labo0
 def esCuadrada(A):
   return A.shape[0] == A.shape[1]
