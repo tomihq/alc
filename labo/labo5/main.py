@@ -52,6 +52,8 @@ def QR_con_GS(A, tol=1e-12, retorna_nops= False):
             return None
         Q[:, j] = qjmoño / R[j][j]
     
+    R[abs(R) < tol] = 0
+    
     return Q, R
     
 
