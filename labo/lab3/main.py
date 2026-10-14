@@ -74,7 +74,7 @@ plt.show()
 # La norma infinito es tomar como norma el ultimo valor
 def norma_inf(x, p):
   sum = 0
-  if p == np.inf:
+  if p == float('inf'):
         return max(abs(xi) for xi in x)
   for i in range(x.shape[0]):
     sum+= abs(x[i])**p
@@ -90,7 +90,7 @@ def normalizar_con_inf(X, p):
     return x_normalizado
 
 
-ps = [1, 2, 5, 10, 100, 200, np.inf]
+ps = [1, 2, 5, 10, 100, 200, float('inf')]
 
 # Puntos de R2
 X = np.random.uniform(-10, 10, (1000, 2))
