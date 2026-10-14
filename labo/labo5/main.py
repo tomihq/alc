@@ -27,9 +27,9 @@ def traspuesta(A):
 def QR_con_GS(A, tol=1e-12, retorna_nops= False):
     dimension = A.shape[0]
     if A is None:
-        return False 
+        return None 
     if A.shape[0] != A.shape[1]:
-        return False
+        return None
     
     Q = np.zeros((dimension, dimension))
 
@@ -49,7 +49,7 @@ def QR_con_GS(A, tol=1e-12, retorna_nops= False):
             qjmoño = qjmoño - (R[k][j] * qk)
         R[j][j] = norma(qjmoño, 2)
         if R[j, j] < tol:
-            return False
+            return None
         Q[:, j] = qjmoño / R[j][j]
     
     return Q, R
