@@ -25,6 +25,7 @@ def traspuesta(A):
 
 
 def QR_con_GS(A, tol=1e-12, retorna_nops= False):
+    dimension = A.shape[0]
     if A is None or A.shape[0] != A.shape[1]:
         return None
 
@@ -75,3 +76,67 @@ def norma(x, p):
         norma += abs(x[i]) ** p
     
     return norma**(1/p)
+
+def QR_con_HH(A, tol=1e-12, extras=False):
+    if A is None:
+        return None
+    m, n = A.shape            
+    if m < n:
+        return None
+
+    R = np.array(A)
+    Q = np.eye(m)
+
+    R_matrices = [R.copy()]
+    Q_matrices = [Q.copy()]
+
+    for k in range(n):
+        x = R[k:, k]
+        sign = 1.0 if x[0] >= 0 else -1.0
+        alpha = -sign * norma(x, 2)
+
+        e1 = np.zeros(m -k)
+        e1[0] = 1.0
+        u = x- alpha * e1
+        norma_u = norma(u, 2)
+
+        if norma_u > tol:
+            u = u/norma_u
+            uc = u.reshape(-1, 1)
+            Hk = np.eye(m - k) - 2 * (uc @ traspuesta(uc))
+            Hkmoño = np.eye(m)
+            Hkmoño[k:, k:] = Hk
+            R = Hkmoño @ R
+            Q = Q @ traspuesta(Hkmoño)
+        R_matrices.append(R.copy())
+        Q_matrices.append(Q.copy())
+    
+    R[np.abs(R) < tol] = 0
+
+    return Q, R
+
+def check_QR(Q,R,A,tol=1e-10):
+    # Comprueba ortogonalidad y reconstrucción
+    assert np.allclose(Q.T @ Q, np.eye(Q.shape[1]), atol=tol)
+    assert np.allclose(Q @ R, A, atol=tol)
+
+A2 = np.array([[1., 2.],
+               [3., 4.]])
+
+A3 = np.array([[1., 0., 1.],
+               [0., 1., 1.],
+               [1., 1., 0.]])
+
+A4 = np.array([[2., 0., 1., 3.],
+               [0., 1., 4., 1.],
+               [1., 0., 2., 0.],
+               [3., 1., 0., 2.]])
+
+Q2h,R2h = QR_con_GS(A2)
+check_QR(Q2h,R2h,A2)
+
+Q3h,R3h = QR_con_HH(A3)
+check_QR(Q3h,R3h,A3)
+
+Q4h,R4h = QR_con_HH(A4)
+check_QR(Q4h,R4h,A4)
