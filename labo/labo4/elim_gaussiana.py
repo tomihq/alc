@@ -240,19 +240,14 @@ def resolver_sistema(A, b):
 def esCuadrada(A):
   return A.shape[0] == A.shape[1]
 
-def esSimetrica(A):
-    if (not(esCuadrada(A))):
-        return False 
-    
-    matrizTranspuesta = traspuesta(A)
-
-    for i in range (0,A.shape[0],1):
-          for j in range (0,A.shape[1],1):
-              if (A[i][j] != matrizTranspuesta[i][j]): 
-                    return False
-    return True
+def esSimetrica(A, atol=1e-8):
+    if not esCuadrada(A):
+        return False
+    return np.allclose(A, traspuesta(A), atol=atol)
 
 def traspuesta(A):
+  if A is None:
+    return None
   matrix_b = np.zeros((A.shape[1], A.shape[0]))
 
   for i in range(A.shape[0]):
@@ -276,13 +271,14 @@ def traspuesta(A):
 
 """
 def descomposicion_ldv(A):
-    L, U, _ = calculaLU(A) #L es triangular inferior. U es triangular superior
-    traspuesta_u = traspuesta(U) #traspuesta_u es triangular inferior
-    D, V, _ = calculaLU(traspuesta_u) #Notar que D nace de la U original que es triangular superior, y después la traspusimos. Entonces nos queda solo la diagonal.
-
+    L, U, _ = calculaLU(A)
+    Vt, D, _ = calculaLU(traspuesta(U))  
+    V = traspuesta(Vt)
     return L, D, V
 
 def diagonal(A):
+    if A is None:
+        return None
     arr = np.zeros(A.shape[0])
 
     for i in range(A.shape[0]):
@@ -290,15 +286,15 @@ def diagonal(A):
 
     return arr
 
-def esSDP(A, atol=1e-10):
+def esSDP(A, atol=1e-5):
+    if not esSimetrica(A, atol):
+        return False
+
     _, D, _ = descomposicion_ldv(A)
-    
-    if not esSimetrica(A):
-        return False 
-    
-    diagonal_d = diagonal(D)
-        
-    return np.all(diagonal_d > 0)
+    if D is None:
+        return False
+
+    return np.all(diagonal(D) > 0)
 
 """
     5. En los casos que A es SDP; se puede factorizar en la forma RR^{t}, donde R es una matriz triangular inferior tal que R = LD^{1/2}.

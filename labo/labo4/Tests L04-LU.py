@@ -1,4 +1,4 @@
-from moduloALC import calculaLU, res_tri, inversa, calculaLDV, esSDP
+from elim_gaussiana import calculaLU, res_tri, inversa, descomposicion_ldv, esSDP
 import numpy as np
 
 # TESTS L04-LU
@@ -116,13 +116,13 @@ print("-----ÉXITO!!!!\n")
 
 
 # Test LDV:
-print("TESTS calculaLDV")
+print("TESTS descomposicion_ldv")
 
 L0 = np.array([[1,0,0],[1,1.,0],[1,1,1]])
 D0 = np.diag([1,2,3])
 V0 = np.array([[1,1,1],[0,1,1],[0,0,1]])
 A =  L0 @ D0 @ V0
-L,D,V = calculaLDV(A)
+L,D,V = descomposicion_ldv(A)
 assert(np.allclose(L,L0))
 assert(np.allclose(D,D0))
 assert(np.allclose(V,V0))
@@ -132,7 +132,7 @@ L0 = np.array([[1,0,0],[1,1.001,0],[1,1,1]])
 D0 = np.diag([3,2,1])
 V0 = np.array([[1,1,1],[0,1,1],[0,0,1.001]])
 A =  L0 @ D0  @ V0
-L,D,V = calculaLDV(A)
+L,D,V = descomposicion_ldv(A)
 assert(np.allclose(L,L0,1e-3))
 assert(np.allclose(D,D0,1e-3))
 assert(np.allclose(V,V0,1e-3))
