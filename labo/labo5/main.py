@@ -113,30 +113,14 @@ def QR_con_HH(A, tol=1e-12, extras=False):
     
     R[np.abs(R) < tol] = 0
 
+    if extras:
+        return Q, R, {'R_matrices': R_matrices, 'Q_matrices': Q_matrices}
+
     return Q, R
 
-def check_QR(Q,R,A,tol=1e-10):
-    # Comprueba ortogonalidad y reconstrucción
-    assert np.allclose(Q.T @ Q, np.eye(Q.shape[1]), atol=tol)
-    assert np.allclose(Q @ R, A, atol=tol)
-
-A2 = np.array([[1., 2.],
-               [3., 4.]])
-
-A3 = np.array([[1., 0., 1.],
-               [0., 1., 1.],
-               [1., 1., 0.]])
-
-A4 = np.array([[2., 0., 1., 3.],
-               [0., 1., 4., 1.],
-               [1., 0., 2., 0.],
-               [3., 1., 0., 2.]])
-
-Q2h,R2h = QR_con_GS(A2)
-check_QR(Q2h,R2h,A2)
-
-Q3h,R3h = QR_con_HH(A3)
-check_QR(Q3h,R3h,A3)
-
-Q4h,R4h = QR_con_HH(A4)
-check_QR(Q4h,R4h,A4)
+def calculaQR(A, metodo = 'RH', tol = 1e-12):
+    if metodo == 'GS':
+        return QR_con_GS(A, tol)
+    elif metodo == 'RH':
+        return QR_con_HH(A, tol)
+    return None
