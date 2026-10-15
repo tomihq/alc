@@ -26,7 +26,7 @@ def norma(x, p):
 
   return sum**(1/p)
 
-print("Ejercicio 1.a.",  norma(np.array([0.1, 0.25, 0.3]), 1))
+#print("Ejercicio 1.a.",  norma(np.array([0.1, 0.25, 0.3]), 1))
 
 # Calcula la norma p
 def normaliza(X, p):
@@ -39,9 +39,9 @@ def normaliza(X, p):
     return x_normalizado
 
 
-print("Ejercicio 1.b ", normaliza([np.array([0.1, 0.1, 0.1]), np.array([0.1, 0.2])], 1))
+#print("Ejercicio 1.b ", normaliza([np.array([0.1, 0.1, 0.1]), np.array([0.1, 0.2])], 1))
 
-
+"""
 
 ps = [1, 2, 5, 10, 100, 200]
 
@@ -69,7 +69,7 @@ plt.axis('equal')
 plt.grid()
 plt.legend()
 plt.show()
-
+"""
 
 # La norma infinito es tomar como norma el ultimo valor
 def norma_inf(x, p):
@@ -89,7 +89,7 @@ def normalizar_con_inf(X, p):
 
     return x_normalizado
 
-
+"""
 ps = [1, 2, 5, 10, 100, 200, float('inf')]
 
 # Puntos de R2
@@ -116,7 +116,7 @@ plt.axis('equal')
 plt.grid()
 plt.legend()
 plt.show()
-
+"""
 def normaMatMC(A, q, p, Np):
   max = 0
   n = A.shape[0]
