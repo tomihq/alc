@@ -1,29 +1,6 @@
+from labo.lab0.lab0 import traspuesta
 import numpy as np 
-
-def traspuesta(A):
-  # More columns than rows
-  if(A.shape[0] < A.shape[1]):
-    matrix_b = np.zeros((A.shape[1], A.shape[0]))
-    for i in range(A.shape[1]): 
-        matrix_b[i, :] = A[:, i]
-    return matrix_b
-  
-  # More rows than columns
-  if(A.shape[0] > A.shape[1]):
-    matrix_b = np.zeros((A.shape[1], A.shape[0]))
-    for i in range(A.shape[0]): 
-        matrix_b[:, i] = A[i, :]
-    return matrix_b
-  
-  # Equal amount of rows and columns
-  matrix_b = np.zeros((A.shape[0], A.shape[1]))
-  for i in range(A.shape[0]):
-    for j in range(A.shape[1]):
-        matrix_b[i][j] = A[j][i]
-  return matrix_b
         
-
-
 def QR_con_GS(A, tol=1e-12, retorna_nops= False):
     dimension = A.shape[0]
     if A is None or A.shape[0] != A.shape[1]:
