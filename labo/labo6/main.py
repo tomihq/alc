@@ -225,6 +225,8 @@ def diagRH(A, tol=1e-15, K=1000):
 """
     S = matriz de autovectores
     D = matriz de autovalores
+
+    Notar que por definición de Diagonalización, para encontrar el autovector correspondiente al autovalor basta con hacer coincidir los índices.
     
     S_bloque[1:, 1:] = S_prime
 
