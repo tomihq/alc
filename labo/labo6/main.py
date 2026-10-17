@@ -182,6 +182,14 @@ def metpot2k(A, tol=1e-8, K=1000):
     Conclusión: A simétrica ⟹ A = UDU^{t}, con U ortogonal real y D diagonal real, es decir,
     A tiene una base ortonormal de autovectores reales.
 
+Intuición de este ejercicio: el método de la potencia nos sirve para encontrar el mayor autovector/autovalor dominante de la matriz actual. Una vez que lo encontrás, hacemos deflación: achicamos con Householder y seguís con esa aplicando de vuelta el método de la potencia reiteradas veces hasta que llegues al caso base.
+
+Pensalo como buscar autovalor/autovector, achicar, y repetir el proceso. 
+
+Pero ¿por qué funciona? cuando achicás, no tirás nada ni inventás nada. Solo cambiás de punto de vista (de base) para separar el autovector que ya encontraste del resto, y lo que queda es exactamente “el resto” del mismo problema.
+
+Analogía: imaginá que tenés un cuarto lleno de cajas y una de ellas ya la identificaste. Rotás la habitación para que esa caja quede en una esquina, y ahora mirás solo el resto del cuarto. Rotar no cambió qué hay en el cuarto, solo cómo lo describís. Lo que encontrés en el resto sigue siendo parte del cuarto original.
+
 """
 
 def diagRH(A, tol=1e-15, K=1000):
