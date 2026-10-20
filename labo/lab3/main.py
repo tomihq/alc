@@ -119,7 +119,7 @@ plt.show()
 """
 def normaMatMC(A, q, p, Np):
   max = 0
-  n = A.shape[0]
+  n = A.shape[1]  # dimensión del dominio: columnas de A
   max_v = np.zeros(n)
   for i in range(0, Np):
     x = np.random.rand(n)
