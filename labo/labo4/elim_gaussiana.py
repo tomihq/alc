@@ -358,3 +358,25 @@ def inversa(A):
         A_inv[:, i] = x
 
     return A_inv
+"""
+D0 = np.diag([1,-1,1])
+print(esSDP(D0))
+
+D0 = np.diag([1,1,1e-16])
+print(esSDP(D0))
+
+L0 = np.array([[1,0,0],
+               [1,1,0],
+               [1,1,1]])
+D0 = np.diag([1,1,1])
+V0 = np.array([[1,0,0],
+               [1,1,0],
+               [1,1+1e-3,1]]).T
+A = L0 @ D0 @ V0
+print(esSDP(A,1e-3))
+
+A = np.array([[4.0, 2.0],[2.0, 3.0]])
+print(esSDP(A))
+
+A = np.array([[1.0, 2.0],[3.0, 4.0]])
+print(esSDP(A))"""
