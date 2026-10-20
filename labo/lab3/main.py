@@ -122,7 +122,7 @@ def normaMatMC(A, q, p, Np):
   n = A.shape[1]  # dimensión del dominio: columnas de A
   max_v = np.zeros(n)
   for i in range(0, Np):
-    x = np.random.rand(n)
+    x = np.random.randn(n)  # cubre todas las direcciones (no solo ortante positivo)
 
     val = norma(A @ x, q) / norma(x, p)
     if val > max:
